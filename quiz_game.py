@@ -30,6 +30,7 @@ class QuizGame:
 
         score = round((self.answer_count / len(selected_quizzes)) * 100)
         self.result(score)
+        self.answer_count = 0
 
     # 사용자가 정답을 입력 할 수 있다.
     def input_answer(self) -> int:
