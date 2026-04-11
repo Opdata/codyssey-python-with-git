@@ -1,7 +1,8 @@
-from file_handler import FileHandler
+import file_handler as FileHandler
 from io_handler import IOHandler
+from quiz import Quiz
+from quiz_game import QuizGame
 
-io = IOHandler()
 
 default_quizzes = [
     {
@@ -31,29 +32,24 @@ default_quizzes = [
     }
 ]
 
-quizzes = []
-high_score = 0
-is_state_loaded = False
+io = IOHandler()
 
+# 퀴즈 데이터 셋업 및 데이터 로드 체크 (기존 데이터와 체크 후 없다면 기본 퀴즈 셋팅)
 def set_quizzes():
     load_quizzes, load_score = FileHandler.load_existing()
 
     if len(load_quizzes) > 0:
-        quizzes = load_quizzes
-        is_state_loaded = True
+        _quizzes = load_quizzes
     else:
-        quizzes = default_quizzes
-        is_state_loaded = False
-    if load_score > 0:
-        high_score = load_score
-        is_state_loaded = True
-    else:
-        high_score = 0
-        is_state_loaded = False
+        _quizzes = default_quizzes
+
+    _high_score = load_score
+    _is_state_loaded = len(load_quizzes) > 0 or load_score > 0
+    return _quizzes, _high_score, _is_state_loaded
 
 try:
     while True:
-        set_quizzes()
+        quizzes, high_score, is_state_loaded = set_quizzes()
         io.display_menu(is_state_loaded, quizzes, high_score)
         choice = io.select_menu()
         
