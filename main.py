@@ -64,7 +64,7 @@ try:
         elif choice == 2:
             io.display_add_quiz()
         elif choice == 3:
-            pass
+            io.display_quiz_list(quiz_list)
         elif choice == 4:
             pass  # 점수 보기
         elif choice == 5:
