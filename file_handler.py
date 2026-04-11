@@ -47,9 +47,9 @@ def save_quiz(quiz):
     existing_quizzes, existing_score = load_existing()
 
     new_quiz = {
-        "question": quiz.question,
-        "choices": quiz.choices,
-        "answer": quiz.answer
+        "question": quiz["question"],
+        "choices": quiz["choices"],
+        "answer": quiz["answer"]
     }
 
     state, _ = _write(existing_quizzes + [new_quiz], existing_score)

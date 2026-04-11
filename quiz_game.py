@@ -29,7 +29,7 @@ class QuizGame:
             self.check(quiz, inputed_answer)
 
         score = round((self.answer_count / len(selected_quizzes)) * 100)
-        self.result(score)
+        self.result(score, len(selected_quizzes))
         self.answer_count = 0
 
     # 사용자가 정답을 입력 할 수 있다.
@@ -47,8 +47,8 @@ class QuizGame:
             self.io.display_wrong()
 
     # 모든 문제를 풀면 결과 표시 및 최고 점수 저장
-    def result(self,score):
-        self.io.display_result(self.answer_count, score)
+    def result(self, score, total_questions):
+        self.io.display_result(self.answer_count, score, total_questions)
         if score > self.high_score:
             save_state = FileHandler.save_score(score)
             self.io.display_save_error(save_state)

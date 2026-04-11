@@ -104,16 +104,11 @@ class IOHandler:
             print("새로운 최고 점수 입니다!")
 
     # 맞힌 문제 개수, 점수 출력
-    def dispaly_result(self, answer_count, score) -> None:
-        # 점수 계산 필요 => 식 : (맞긴 문제 개수 / 총 문제 수(저장된 문제의 길이가 5보다 크면 5로 고정이고, 작다면 문제의 길이) * 100)
-        quizzes, existing_score = file_handler.load_existing()
-        if len(quizzes) >= 5:
-            total_questions = 5
-        else:
-            total_questions = len(quizzes)
-        score = (answer_count // total_questions) * 100
+    def display_result(self, answer_count, score, total_questions) -> None:
+        _, existing_score = file_handler.load_existing()
+
         print("========================================")
-        print(f"결과: 5문제 중 {answer_count}문제 정답! ({score}점)")
+        print(f"결과: {total_questions}문제 중 {answer_count}문제 정답! ({score}점)")
         self._display_new_high_score(score, existing_score)
         print("========================================")
     
@@ -131,13 +126,13 @@ class IOHandler:
             quiz["choices"].append(input(f"선택지 {i+1}: "))
         quiz["answer"] = self._input_number("정답 번호 (1-4):", 1, 4)
         
-        reason, result = file_handler.save_quiz(quiz)
+        reason = file_handler.save_quiz(quiz)
         if reason == 'success':
             print("\n✅ 퀴즈가 추가되었습니다.")
         else:
             print("\n❌ 퀴즈 추가에 실패했습니다.")
 
-    def display_save_error(_state):
+    def display_save_error(self,_state):
         if _state == 'success':
             print("\n✅ 데이터 저장에 성공했습니다.")
         else:
