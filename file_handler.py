@@ -24,7 +24,7 @@ def _load():
     except json.JSONDecodeError:
         return "corrupted", None 
 
-def _write(quizzes, score):
+def _write(quizzes, score) -> tuple[str, None]:
     try:
         with open("state.json", "w", encoding="utf-8") as f:
             json.dump({"quizzes": quizzes, "score": score}, f, ensure_ascii=False, indent=2)
@@ -32,7 +32,7 @@ def _write(quizzes, score):
     except IOError:
         return "fail_write", None
 
-def load_existing():
+def load_existing() -> tuple[list, int]:
     state, existing_data = _load()
     if state == "success":
         return existing_data.get("quizzes", []), existing_data.get("score", 0)
@@ -41,6 +41,7 @@ def load_existing():
     else:  # corrupted
         return [], 0
 
+# 퀴즈 저장
 def save_quiz(quiz):
     existing_quizzes, existing_score = load_existing()
 
@@ -53,6 +54,7 @@ def save_quiz(quiz):
     state, _ = _write(existing_quizzes + [new_quiz], existing_score)
     return state
 
+# 최고 점수 저장
 def save_score(_score):
     existing_quizzes, existing_score = load_existing()
     state, _ = _write(existing_quizzes, max(existing_score, _score))
