@@ -88,8 +88,10 @@ class IOHandler:
             print("아직 퀴즈가 없습니다.")
         else:
             print(f"등록된 퀴즈 목록 (총 {len(quizzes)}개)")
+            print("========================================")
             for i, quiz in enumerate(quizzes):
                 print(f"{i + 1}. {quiz.question}")
+            print("========================================")
 
     # 정답 메시지 출력
     def display_correct(self) -> None:

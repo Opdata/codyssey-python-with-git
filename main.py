@@ -62,9 +62,9 @@ try:
             quiz_game.play_quiz()
             
         elif choice == 2:
-            pass  # 퀴즈 추가
+            io.display_add_quiz()
         elif choice == 3:
-            pass  # 퀴즈 목록
+            pass
         elif choice == 4:
             pass  # 점수 보기
         elif choice == 5:
