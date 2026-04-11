@@ -66,7 +66,7 @@ try:
         elif choice == 3:
             io.display_quiz_list(quiz_list)
         elif choice == 4:
-            pass  # 점수 보기
+            io.display_score(high_score)
         elif choice == 5:
             break
         
