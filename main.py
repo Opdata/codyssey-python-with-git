@@ -36,7 +36,10 @@ io = IOHandler()
 
 # 퀴즈 데이터 셋업 및 데이터 로드 체크 (기존 데이터와 체크 후 없다면 기본 퀴즈 셋팅)
 def set_quizzes():
-    load_quizzes, load_score = FileHandler.load_existing()
+    state, load_quizzes, load_score = FileHandler.load_existing()
+
+    if state == "corrupted":
+        print("⚠️ 데이터 파일이 손상되었습니다. 기본 퀴즈로 초기화합니다.")
 
     if len(load_quizzes) > 0:
         _quizzes = load_quizzes

@@ -4,10 +4,6 @@ class IOHandler:
     def __init__(self):
         pass
 
-    def _valid_question_input(self, value: str):
-        # TODO: 퀴즈 입력의 경우 null, undefined, None, False, True, "", " " 이런건 다 공통으로
-        pass
-
     # 숫자 검증
     def _validate_number_input(self, value: str, min: int, max: int) -> tuple[str, int | None]:
         sanitized = value.strip()
@@ -107,7 +103,7 @@ class IOHandler:
 
     # 맞힌 문제 개수, 점수 출력
     def display_result(self, answer_count, score, total_questions) -> None:
-        _, existing_score = file_handler.load_existing()
+        _, _, existing_score = file_handler.load_existing()
 
         print("========================================")
         print(f"결과: {total_questions}문제 중 {answer_count}문제 정답! ({score}점)")
