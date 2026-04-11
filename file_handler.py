@@ -32,6 +32,7 @@ def _write(quizzes, score) -> tuple[str, None]:
     except IOError:
         return "fail_write", None
 
+# 퀴즈 데이터, 최고 점수 불러오기 / return 퀴즈 리스트, 최고 점수
 def load_existing() -> tuple[list, int]:
     state, existing_data = _load()
     if state == "success":
@@ -56,6 +57,6 @@ def save_quiz(quiz):
 
 # 최고 점수 저장
 def save_score(_score):
-    existing_quizzes, existing_score = load_existing()
-    state, _ = _write(existing_quizzes, max(existing_score, _score))
+    existing_quizzes, _ = load_existing()
+    state, _ = _write(existing_quizzes, _score)
     return state

@@ -32,7 +32,7 @@ default_quizzes = [
 ]
 
 quizzes = []
-score = 0
+high_score = 0
 is_state_loaded = False
 
 def set_quizzes():
@@ -45,16 +45,16 @@ def set_quizzes():
         quizzes = default_quizzes
         is_state_loaded = False
     if load_score > 0:
-        score = load_score
+        high_score = load_score
         is_state_loaded = True
     else:
-        score = 0
+        high_score = 0
         is_state_loaded = False
 
 try:
     while True:
         set_quizzes()
-        io.display_menu(is_state_loaded, quizzes, score)
+        io.display_menu(is_state_loaded, quizzes, high_score)
         choice = io.select_menu()
         
         quiz_list = []
@@ -62,7 +62,9 @@ try:
             quiz_list.append(Quiz(quiz["question"], quiz["choices"], quiz["answer"]))
 
         if choice == 1:
-            pass  # 퀴즈 풀기
+            quiz_game = QuizGame(quiz_list, high_score)
+            quiz_game.play_quiz()
+            
         elif choice == 2:
             pass  # 퀴즈 추가
         elif choice == 3:

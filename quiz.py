@@ -13,6 +13,6 @@ class Quiz:
         print("\n")
 
     # 정답 확인 메소드 / True or False
-    def check_answer(self, answer: int) -> bool:
-        return self.answer == answer
+    def check_answer(self, inputed_answer: int) -> bool:
+        return self.answer == inputed_answer
             

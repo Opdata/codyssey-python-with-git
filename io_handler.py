@@ -48,12 +48,12 @@ class IOHandler:
             return result
 
     # 메뉴 출력 및 데이터 존재 시 안내 메시지 출력
-    def display_menu(self, load, quizzes, score) -> None:
+    def display_menu(self, load, quizzes, high_score) -> None:
         print("========================================")
         print("            🎯 나만의 퀴즈 게임 🎯           ")
         print("========================================")
         if load:
-            print(f"📂 저장된 데이터를 불러왔습니다. (퀴즈 {len(quizzes)}개, 최고점수 {score}점)")
+            print(f"📂 저장된 데이터를 불러왔습니다. (퀴즈 {len(quizzes)}개, 최고점수 {high_score}점)")
         print("1. 퀴즈 풀기")
         print("2. 퀴즈 추가")
         print("3. 퀴즈 목록")
@@ -76,6 +76,12 @@ class IOHandler:
         else:
             print(f"최고 점수: {score}점")
     
+    # 퀴즈 출력
+    def display_quiz(self, quiz) -> None:
+        print(quiz.question)
+        for i, choice in enumerate(quiz.choices):
+            print(f"{i + 1}. {choice}")
+
     # 퀴즈 목록 출력
     def display_quiz_list(self, quizzes) -> None:
         if len(quizzes) == 0:
@@ -93,13 +99,22 @@ class IOHandler:
     def display_wrong(self) -> None:
         print("❌ 땡!")
 
-    # 맞힌 문제 개수, 점수 출력
-    def dispaly_result(self, count, score) -> None:
-        print("========================================")
-        print(f"결과: 5문제 중 {count}문제 정답! ({score}점)")
-        _, existing_score = file_handler.load_existing()
+    def _display_new_high_score(self, score, existing_score) -> None:
         if score > existing_score:
             print("새로운 최고 점수 입니다!")
+
+    # 맞힌 문제 개수, 점수 출력
+    def dispaly_result(self, answer_count, score) -> None:
+        # 점수 계산 필요 => 식 : (맞긴 문제 개수 / 총 문제 수(저장된 문제의 길이가 5보다 크면 5로 고정이고, 작다면 문제의 길이) * 100)
+        quizzes, existing_score = file_handler.load_existing()
+        if len(quizzes) >= 5:
+            total_questions = 5
+        else:
+            total_questions = len(quizzes)
+        score = (answer_count / total_questions) * 100
+        print("========================================")
+        print(f"결과: 5문제 중 {answer_count}문제 정답! ({score}점)")
+        self._display_new_high_score(score, existing_score)
         print("========================================")
     
     # 퀴즈 추가
@@ -121,3 +136,9 @@ class IOHandler:
             print("\n✅ 퀴즈가 추가되었습니다.")
         else:
             print("\n❌ 퀴즈 추가에 실패했습니다.")
+
+    def display_save_error(_state):
+        if _state == 'success':
+            print("\n✅ 데이터 저장에 성공했습니다.")
+        else:
+            print("\n❌ 데이터 저장에 실패했습니다.")
