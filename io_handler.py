@@ -111,7 +111,7 @@ class IOHandler:
             total_questions = 5
         else:
             total_questions = len(quizzes)
-        score = (answer_count / total_questions) * 100
+        score = (answer_count // total_questions) * 100
         print("========================================")
         print(f"결과: 5문제 중 {answer_count}문제 정답! ({score}점)")
         self._display_new_high_score(score, existing_score)
